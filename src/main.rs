@@ -12,13 +12,13 @@ use rocket::tokio::sync::broadcast::{channel, Sender, error::RecvError};
 use rocket::tokio::select;
 
 /* 
-//this is a route called world.
-//route attribute describes the type of request 
-//this route handles in this route
-//get request to the path
+this is a route called world.
+route attribute describes the type of request 
+this route handles in this route
+get request to the path
             #[get("/world")]
-//handler function desrubes how that request is to be processed
-//here the handler has no parameters and returns a string 
+handler function desrubes how that request is to be processed
+here the handler has no parameters and returns a string 
         fn world() -> &'static str {
             "Hello world!"
         }
