@@ -1,21 +1,26 @@
-let roomListDiv = document.getElementById('room-list');
-let messagesDiv = document.getElementById('messages');
-let newMessageForm = document.getElementById('new-message');
-let newRoomForm = document.getElementById('new-room');
-let statusDiv = document.getElementById('status');
+let roomListDiv         = document.getElementById('room-list');
+let messagesDiv         = document.getElementById('messages');
+let newMessageForm      = document.getElementById('new-message');
+let newRoomForm         = document.getElementById('new-room');
+let statusDiv           = document.getElementById('status');
 
-let roomTemplate = document.getElementById('room');
-let messageTemplate = document.getElementById('message');
+let roomTemplate        = document.getElementById('room');
+let messageTemplate     = document.getElementById('message');
 
-let messageField = newMessageForm.querySelector("#message");
-let usernameField = newMessageForm.querySelector("#username");
-let roomNameField = newRoomForm.querySelector("#name");
+let roomNameField       = newRoomForm.querySelector("#name");
+let messageField        = newMessageForm.querySelector("#message");
+let usernameField       = newMessageForm.querySelector("#username");
+
+
 
 var STATE = {
   room: "lobby",
   rooms: {},
   connected: false,
 }
+
+
+
 
 // Generate a color from a "hash" of a string. Thanks, internet.
 function hashColor(str) {
@@ -24,13 +29,17 @@ function hashColor(str) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
     hash = hash & hash;
   }
-
   return `hsl(${hash % 360}, 100%, 70%)`;
 }
+
+
+
+
 
 // Add a new room `name` and change to it. Returns `true` if the room didn't
 // already exist and false otherwise.
 function addRoom(name) {
+
   if (STATE[name]) {
     changeRoom(name);
     return false;
@@ -47,6 +56,10 @@ function addRoom(name) {
   changeRoom(name);
   return true;
 }
+
+
+
+
 
 // Change the current room to `name`, restoring its messages.
 function changeRoom(name) {
@@ -67,6 +80,10 @@ function changeRoom(name) {
   STATE[name].forEach((data) => addMessage(name, data.username, data.message))
 }
 
+
+
+
+
 // Add `message` from `username` to `room`. If `push`, then actually store the
 // message. If the current room is `room`, render the message.
 function addMessage(room, username, message, push = false) {
@@ -82,6 +99,10 @@ function addMessage(room, username, message, push = false) {
     messagesDiv.appendChild(node);
   }
 }
+
+
+
+
 
 // Subscribe to the event source at `uri` with exponential backoff reconnect.
 function subscribe(uri) {
@@ -118,11 +139,20 @@ function subscribe(uri) {
   connect(uri);
 }
 
+
+
+
+
 // Set the connection status: `true` for connected, `false` for disconnected.
 function setConnectedStatus(status) {
   STATE.connected = status;
   statusDiv.className = (status) ? "connected" : "reconnecting";
 }
+
+
+
+
+
 
 // Let's go! Initialize the world.
 function init() {
@@ -132,6 +162,7 @@ function init() {
   changeRoom("lobby");
   addMessage("lobby", "Rocket", "Hey! Open another browser tab, send a message.", true);
   addMessage("rocket", "Rocket", "This is another room. Neat, huh?", true);
+
 
   // Set up the form handler.
   newMessageForm.addEventListener("submit", (e) => {
@@ -169,4 +200,9 @@ function init() {
   subscribe("/events");
 }
 
+
+
+
+
+// Everything starts here LOL!! 
 init();
